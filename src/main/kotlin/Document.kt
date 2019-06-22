@@ -21,7 +21,7 @@ data class Document (
     val tags: Tag? = null,
     val externalDocs: ExternalDocumentation? = null
 ) {
-    fun toYaml(): String {
+    fun yaml(): String {
         val mapper = ObjectMapper(YAMLFactory())
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper.writeValueAsString(this)
