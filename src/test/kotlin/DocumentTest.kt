@@ -6,7 +6,7 @@ import main.document
 
 class DocumentTest: AnnotationSpec() {
     @Test
-    fun `Create Document`() {
+    fun `Creating a Document should succeed`() {
         val d = document {
             openapi { "3" }
             info {
@@ -34,7 +34,7 @@ class DocumentTest: AnnotationSpec() {
                     tag { "tag2" }
                     summary { "GET request" }
                     description { "TOO much to write for a desc" }
-                    operationId { "as" }
+                    operationId { "getStatus" }
                     deprecated { true }
 
                 }
@@ -42,7 +42,7 @@ class DocumentTest: AnnotationSpec() {
                     tag { "tag1" }
                     summary { "GET request" }
                     description { "TOO much to write for a desc" }
-                    operationId { "as" }
+                    operationId { "postStatus" }
                 }
             }
         }
@@ -54,10 +54,5 @@ class DocumentTest: AnnotationSpec() {
         assert(d.info.contact?.name == "Islam Shehata")
         assert(d.paths.count() == 1)
         assert(d.paths.containsKey("/status"))
-
-        val y = d.toYaml()
-        println(y)
-        val j = d.json()
-        println(j)
     }
 }
