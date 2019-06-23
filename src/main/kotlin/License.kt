@@ -20,7 +20,3 @@ class LicenseBuilder {
 
     fun build() = License(name, url)
 }
-
-fun license(block: LicenseBuilder.() -> Unit): License {
-    return LicenseBuilder().apply(block).build()
-}
