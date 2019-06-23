@@ -121,17 +121,23 @@ document {
 
  - `name` is **required**
 
-### Converting document to JSON
+### Exporting document to JSON or YAML
+
+It's very easy to get a string of JSON or YAML
+from a document, it uses Jackson to serialize the document.
+
+once you have a document object you can call `json()` or `yaml()` 
 
 ```kotlin
 val d = document{}
 d.json()
+d.yaml()
 ```
 
-
-### Converting document to YAML
+It's also possible to save the document to JSON or YAML files. 
 
 ```kotlin
 val d = document{}
-d.yaml()
+d.exportToJsonFile("file path goes here")
+d.exportToYamlFile("file path goes here")
 ```

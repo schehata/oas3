@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
+import java.io.File
 
 
 @DslMarker
@@ -21,17 +22,39 @@ data class Document (
     val tags: List<Tag>? = null,
     val externalDocs: ExternalDocumentation? = null
 ) {
-    fun yaml(): String {
+
+    private fun getYamlMapper(): ObjectMapper {
         val mapper = ObjectMapper(YAMLFactory())
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true)
+        return mapper
+    }
+
+    private fun getJsonMapper(): ObjectMapper {
+        val mapper = ObjectMapper(JsonFactory())
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true)
+        return mapper
+    }
+
+    fun yaml(): String {
+        val mapper = getYamlMapper()
         return mapper.writeValueAsString(this)
     }
 
     fun json(): String {
-        val mapper = ObjectMapper(JsonFactory())
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.configure(SerializationFeature.INDENT_OUTPUT, true)
+        val mapper = getJsonMapper()
         return mapper.writeValueAsString(this)
+    }
+
+    fun exportToYamlFile(path: String) {
+        val mapper = getYamlMapper()
+        return mapper.writeValue(File(path), this)
+    }
+
+    fun exportToJsonFile(path: String) {
+        val mapper = getJsonMapper()
+        return mapper.writeValue(File(path), this)
     }
 }
 
