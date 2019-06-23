@@ -17,31 +17,27 @@ data class Operation(
 
 class OperationBuilder {
     private var tags: ArrayList<String> = arrayListOf()
-    private var summary: String? = null
-    private var description: String? = null
+    var summary: String? = null
+    var description: String? = null
     private var externalDocs: ArrayList<ExternalDocumentation> = arrayListOf()
-    private var operationId: String? = null
+    var operationId: String? = null
     private var parameters: Reference? = null
     private var requestBody: Reference? = null
     private var responses: ArrayList<Response> = arrayListOf()
     private var callbacks: Map<String, Reference>? = mapOf()
-    private var deprecated: Boolean = false
+    var deprecated: Boolean = false
     private var security: SecurityRequirement? = null
     private var servers: MutableList<Server>? = null
 
     fun tag(block: () -> String) { tags.add(block()) }
-    fun summary(block: () -> String) { summary = block() }
-    fun description(block: () -> String) { description = block() }
     fun doc(block: ExternalDocumentationBuilder.() -> Unit) {
         externalDocs.add(ExternalDocumentationBuilder().apply(block).build())
     }
-    fun operationId(block: () -> String) { operationId = block() }
     fun parameters(block: () -> Reference) { parameters = block() }
     fun requestBody(block: () -> Reference) { requestBody = block() }
     fun response(block: ResponseBuilder.() -> Unit) {
         responses.add(ResponseBuilder().apply(block).build())
     }
-    fun deprecated(block: () -> Boolean) { deprecated = block() }
     fun security(block: SecurityRequirementBuilder.() -> Unit) {
         security = SecurityRequirementBuilder().apply(block).build()
     }

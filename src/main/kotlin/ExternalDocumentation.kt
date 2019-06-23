@@ -6,11 +6,8 @@ data class ExternalDocumentation(
 )
 
 class ExternalDocumentationBuilder {
-    private var url = ""
-    private var description: String? = null
-
-    fun url(block: () -> String) { url = block() }
-    fun description(block: () -> String) { description = block() }
+    var url = ""
+    var description: String? = null
 
     fun build() = ExternalDocumentation(url, description)
 }

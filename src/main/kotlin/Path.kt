@@ -17,9 +17,9 @@ data class Path(
 )
 
 class PathBuilder {
-    private var ref: String? = null
-    private var summary: String? = null
-    private var description: String? = null
+    var ref: String? = null
+    var summary: String? = null
+    var description: String? = null
     private var get: Operation? = null
     private var put: Operation? = null
     private var post: Operation? = null
@@ -31,9 +31,6 @@ class PathBuilder {
     private var servers: MutableList<Server>? = null
     private var parameters: Reference? = null
 
-    fun ref(block: () -> String) { ref = block() }
-    fun summary(block: () -> String) { summary = block() }
-    fun description(block: () -> String) { description = block() }
     fun get(block: OperationBuilder.() -> Unit) { get = OperationBuilder().apply(block).build() }
     fun put(block: OperationBuilder.() -> Unit) { put = OperationBuilder().apply(block).build() }
     fun post(block: OperationBuilder.() -> Unit) { post = OperationBuilder().apply(block).build() }

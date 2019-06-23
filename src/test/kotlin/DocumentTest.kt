@@ -8,7 +8,7 @@ class DocumentTest: AnnotationSpec() {
     fun `Creating a Document should succeed`() {
         val d = validDocument
 
-        assert(d.openapi == "3")
+        assert(d.openapi == "3.0.0")
         assert(d.servers?.count() == 2)
         assert(d.servers?.get(0)?.url ==  "api.schehata.com")
         assert(d.info.version == "1.0.0")

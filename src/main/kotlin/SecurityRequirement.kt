@@ -1,16 +1,21 @@
 package main
 
 data class SecurityRequirement(
-    val name: String,
-    val values: List<String>? = null
+    val scheme: String,
+    val scopes: List<String>? = null
 )
 
 class SecurityRequirementBuilder {
-    private var name = ""
-    private var values: ArrayList<String> = arrayListOf()
+    private var scheme = ""
+    private var scopes: MutableList<String>? = null
 
-    fun name(block: () -> String) { name = block() }
-    fun value(block: () -> String) { values.add(block()) }
+    fun scheme(block: () -> String) { scheme = block() }
+    fun scopes(block: () -> String) {
+        if (scopes == null) {
+            scopes = mutableListOf()
+        }
+        scopes!!.add(block())
+    }
 
-    fun build() = SecurityRequirement(name, values)
+    fun build() = SecurityRequirement(scheme, scopes)
 }

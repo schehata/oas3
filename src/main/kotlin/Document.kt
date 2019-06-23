@@ -17,7 +17,7 @@ data class Document (
     val servers: List<Server>? = null,
     val paths: Map<String, Path> = mapOf(),
     val components: Component? = null,
-    val security: SecurityRequirement? = null,
+    val security: Map<String, List<String>>? = null,
     val tags: List<Tag>? = null,
     val externalDocs: ExternalDocumentation? = null
 ) {
@@ -58,17 +58,13 @@ data class Document (
 }
 
 class DocumentBuilder {
-    private var openapi: String = ""
+    var openapi: String = ""
     private var info: Info = Info("", null, null, null, null, "")
     private var servers: MutableList<Server>? = null
     private var paths: MutableMap<String, Path> = mutableMapOf()
     private var components: Component? = null
-    private var security: SecurityRequirement? = null
+    private var security: MutableMap<String, List<String>>? = null
     private var tags: ArrayList<Tag>? = null
-
-    fun openapi(block: () -> String) {
-        this.openapi = block()
-    }
 
     fun info(block: InfoBuilder.() -> Unit) {
         this.info = InfoBuilder().apply(block).build()
@@ -90,6 +86,13 @@ class DocumentBuilder {
             tags = arrayListOf()
         }
         tags!!.add(TagBuilder().apply(block).build())
+    }
+
+    fun security(scheme: String, block: MutableList<String>.() -> Unit) {
+        if (security == null) {
+            security = mutableMapOf()
+        }
+        security!![scheme] = mutableListOf<String>().apply(block)
     }
 
     fun build() = Document(openapi, info, servers, paths, components, security, tags)

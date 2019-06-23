@@ -7,41 +7,40 @@ OAS3 is a Kotlin package to build OpenAPI 3 spec files in DSL.
 
 ```kotlin
 document {
-    openapi { "3" }
+    openapi = "3.0.0"
     info {
-        title { "OpenAPI 3 Spec" }
-        version { "1.0.0" }
+        title = "OpenAPI 3 Spec"
+        version = "1.0.0"
         contact {
-            name { "Islam Shehata" }
-            email { "schehata@icloud.com" }
+            name = "Islam Shehata"
+            email = "schehata@icloud.com"
         }
         license {
-            name { "GPL 3" }
+            name = "GPL 3"
         }
     }
     server {
-        url { "api.schehata.com" }
-        description { "server description" }
+        url = "api.schehata.com"
+        description = "server description"
     }
     server {
-        url { "sandbox.schehata.com" }
-        description { "Testing Server" }
+        url = "sandbox.schehata.com"
+        description = "Testing Server"
     }
     path("/status") {
         get {
             tag { "tag1" }
             tag { "tag2" }
-            summary { "GET request" }
-            description { "TOO much to write for a desc" }
-            operationId { "getStatus" }
-            deprecated { true }
-
+            summary = "GET request"
+            description = "TOO much to write for a desc"
+            operationId = "getStatus"
+            deprecated = true
         }
         post {
             tag { "tag1" }
-            summary { "POST request" }
-            description { "TOO much to write for a desc" }
-            operationId { "postStatus" }
+            summary = "POST request"
+            description = "TOO much to write for a desc"
+            operationId = "postStatus"
         }
     }
 }
@@ -65,16 +64,16 @@ Creating info object is straight forward.
 
 ```kotlin
 info {
-    title { "OpenAPI 3 Spec" }
-    description { "Descriptive info" }
-    termsOfService { "Terms Of Service goes here" }
-    version { "1.0.0" }
+    title = "OpenAPI 3 Spec"
+    description = "Descriptive info"
+    termsOfService = "Terms Of Service goes here"
+    version = "1.0.0"
     contact {
-        name { "Islam Shehata" }
-        email { "schehata@icloud.com" }
+        name ="Islam Shehata"
+        email = "schehata@icloud.com"
     }
     license {
-        name { "GPL 3" }
+        name = "GPL 3"
     }
 }
 ```
@@ -106,27 +105,27 @@ document {
         get {
             tag { "tag1" }
             tag { "tag2" }
-            summary { "GET request" }
-            description { "TOO much to write for a desc" }
-            operationId { "getStatus" }
-            deprecated { true }
+            summary = "GET request"
+            description = "TOO much to write for a desc"
+            operationId = "getStatus"
+            deprecated = true
     
         }
         post {
             tag { "tag1" }
-            summary { "POST request" }
-            description { "TOO much to write for a desc" }
-            operationId { "postStatus" }
+            summary = "POST request"
+            description = "TOO much to write for a desc"
+            operationId = "postStatus"
         }
     }
     path("/example") {
        put {
-           summary { "PUT Request" }
-           operationId { "putExample" }
+           summary = "PUT Request"
+           operationId = "putExample"
        }
        delete {
-            summary { "DELETE Request" }
-           operationId { "deleteExample" }
+            summary = "DELETE Request"
+           operationId = "deleteExample"
        }
     }
 }
@@ -141,11 +140,11 @@ tags by using `tag {}`
 ```kotlin
 document {
     tag {
-        name { "tag name" }
-        description { "tag description" }
+        name = "tag name"
+        description = "tag description"
         doc {
-            url { "" }
-            description { "" }
+            url = "required"
+            description = "optional"
         }
     }
 }
