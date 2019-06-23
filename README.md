@@ -80,7 +80,19 @@ info {
 ```
 
 
-### Adding Servers
+### Adding Security Requirements
+
+Security Requirement is a map, it needs a scope and maybe a list of strings.
+
+the `security` dsl object adds a new key/value to the `security` object.
+
+```kotlin
+security("oauth2") {
+    add("write:pets")
+    add("read:pets")
+}
+security("basic") {}
+```
 
 
 
