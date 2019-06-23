@@ -5,9 +5,7 @@ data class Response(
 )
 
 class ResponseBuilder {
-    private var default: String = ""
-
-    infix fun default(value: String) { default = value }
+    var default: String = ""
 
     fun build() = Response(default)
 }

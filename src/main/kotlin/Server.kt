@@ -7,11 +7,8 @@ data class Server(
 )
 
 class ServerBuilder{
-    private var url: String = "/"
-    private var description: String? = null
-
-    fun url(block: () -> String) { url = block() }
-    fun description(block: () -> String) { description = block() }
+    var url: String = "/"
+    var description: String? = null
 
     fun build() = Server(url, description)
 }

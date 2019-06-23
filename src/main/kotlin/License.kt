@@ -7,16 +7,8 @@ data class License(
 )
 
 class LicenseBuilder {
-    private var name: String = ""
-    private var url: String? = null
-
-    fun name(block: () -> String) {
-        this.name = block()
-    }
-
-    fun url(block: () -> String) {
-        this.url = block()
-    }
+    var name: String = ""
+    var url: String? = null
 
     fun build() = License(name, url)
 }
