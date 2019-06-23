@@ -1,6 +1,7 @@
 package com.schehata.oas3.test
 
 import io.kotlintest.specs.AnnotationSpec
+import java.io.File
 
 class DocumentTest: AnnotationSpec() {
     @Test
@@ -16,11 +17,32 @@ class DocumentTest: AnnotationSpec() {
         assert(d.paths.containsKey("/status"))
     }
 
+    @Test
     fun `Document Tags should contains correct values`() {
         assert(validDocument.tags?.count() == 1)
         val tag = validDocument.tags!!.get(0)!!
         assert(tag.name == "Document Tag")
         assert(tag.description!!.isNotBlank())
         assert(tag.externalDocs!!.url.isNotBlank())
+    }
+
+    @Test
+    fun `Export document to yaml file should create the file`() {
+        val filePath = "/tmp/openapi.yaml"
+        validDocument.exportToYamlFile(filePath)
+
+        val file = File(filePath)
+
+        assert(file.exists())
+    }
+
+    @Test
+    fun `Export document to json file should create the file`() {
+        val filePath = "/tmp/openapi.json"
+        validDocument.exportToJsonFile(filePath)
+
+        val file = File(filePath)
+
+        assert(file.exists())
     }
 }
