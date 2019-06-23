@@ -65,6 +65,7 @@ class DocumentBuilder {
     private var components: Component? = null
     private var security: MutableMap<String, List<String>>? = null
     private var tags: ArrayList<Tag>? = null
+    private var doc: ExternalDocumentation? = null
 
     fun info(block: InfoBuilder.() -> Unit) {
         this.info = InfoBuilder().apply(block).build()
@@ -93,6 +94,10 @@ class DocumentBuilder {
             security = mutableMapOf()
         }
         security!![scheme] = mutableListOf<String>().apply(block)
+    }
+
+    fun doc(block: ExternalDocumentationBuilder.() -> Unit) {
+        doc = ExternalDocumentationBuilder().apply(block).build()
     }
 
     fun build() = Document(openapi, info, servers, paths, components, security, tags)
