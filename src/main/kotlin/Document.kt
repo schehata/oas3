@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import java.io.File
 
-
 @DslMarker
 internal annotation class DocumentDSL
 
@@ -60,8 +59,8 @@ data class Document (
 
 class DocumentBuilder {
     private var openapi: String = ""
-    private var info: Info = Info("", "", "", Contact(), License(""), "")
-    private var servers: ArrayList<Server> = arrayListOf()
+    private var info: Info = Info("", null, null, null, null, "")
+    private var servers: MutableList<Server>? = null
     private var paths: MutableMap<String, Path> = mutableMapOf()
     private var components: Component? = null
     private var security: SecurityRequirement? = null
@@ -76,7 +75,10 @@ class DocumentBuilder {
     }
 
     fun server(block: ServerBuilder.() -> Unit) {
-        servers.add(ServerBuilder().apply(block).build())
+        if (servers.isNullOrEmpty()) {
+            servers = mutableListOf()
+        }
+        servers!!.add(ServerBuilder().apply(block).build())
     }
 
     fun path(url: String, block: PathBuilder.() -> Unit) {

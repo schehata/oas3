@@ -28,7 +28,7 @@ class PathBuilder {
     private var head: Operation? = null
     private var patch: Operation? = null
     private var trace: Operation? = null
-    private var servers: List<Server>? = arrayListOf()
+    private var servers: MutableList<Server>? = null
     private var parameters: Reference? = null
 
     fun ref(block: () -> String) { ref = block() }
@@ -42,7 +42,12 @@ class PathBuilder {
     fun head(block: OperationBuilder.() -> Unit) { head = OperationBuilder().apply(block).build() }
     fun patch(block: OperationBuilder.() -> Unit) { patch = OperationBuilder().apply(block).build() }
     fun trace(block: OperationBuilder.() -> Unit) { trace = OperationBuilder().apply(block).build() }
-    fun servers(block: () -> ArrayList<Server>) { servers = block() }
+    fun server(block: ServerBuilder.() -> Unit) {
+        if (servers.isNullOrEmpty()) {
+            servers = mutableListOf()
+        }
+        servers!!.add(ServerBuilder().apply(block).build())
+    }
     fun parameters(block: () -> Reference) { parameters = block() }
 
     fun build() = Path(ref, summary, description, get, put, post, delete, options, head, patch, trace, servers,
