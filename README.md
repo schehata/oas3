@@ -100,6 +100,27 @@ document {
 }
 ```
 
+
+### Adding Tags 
+
+Usually tags is a list of `Tag Object` you can create/append to list of 
+tags by using `tag {}`
+
+```kotlin
+document {
+    tag {
+        name { "tag name" }
+        description { "tag description" }
+        doc {
+            url { "" }
+            description { "" }
+        }
+    }
+}
+```
+
+ - `name` is **required**
+
 ### Converting document to JSON
 
 ```kotlin
