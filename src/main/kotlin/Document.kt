@@ -18,7 +18,7 @@ data class Document (
     val paths: Map<String, Path> = mapOf(),
     val components: Component? = null,
     val security: SecurityRequirement? = null,
-    val tags: Tag? = null,
+    val tags: List<Tag>? = null,
     val externalDocs: ExternalDocumentation? = null
 ) {
     fun yaml(): String {
@@ -40,6 +40,9 @@ class DocumentBuilder {
     private var info: Info = Info("", "", "", Contact(), License(""), "")
     private var servers: ArrayList<Server> = arrayListOf()
     private var paths: MutableMap<String, Path> = mutableMapOf()
+    private var components: Component? = null
+    private var security: SecurityRequirement? = null
+    private var tags: ArrayList<Tag>? = null
 
     fun openapi(block: () -> String) {
         this.openapi = block()
@@ -57,7 +60,14 @@ class DocumentBuilder {
         paths.put(url, PathBuilder().apply(block).build())
     }
 
-    fun build() = Document(openapi, info, servers, paths)
+    fun tag(block: TagBuilder.() -> Unit) {
+        if(tags.isNullOrEmpty()) {
+            tags = arrayListOf()
+        }
+        tags!!.add(TagBuilder().apply(block).build())
+    }
+
+    fun build() = Document(openapi, info, servers, paths, components, security, tags)
 }
 
 fun document(block: DocumentBuilder.() -> Unit): Document {
