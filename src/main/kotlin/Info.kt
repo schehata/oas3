@@ -16,7 +16,7 @@ data class Info(
 class InfoBuilder {
     private var title: String = ""
     private var description: String? = null
-    private var termsOfService: String = ""
+    private var termsOfService: String? = null
     private var contact: Contact? = null
     private var license: License? = null
     private var version: String = ""
@@ -46,8 +46,4 @@ class InfoBuilder {
     }
 
     fun build() = Info(title, description, termsOfService, contact, license, version)
-}
-
-fun info(block: InfoBuilder.() -> Unit): Info {
-    return InfoBuilder().apply(block).build()
 }

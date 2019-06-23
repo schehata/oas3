@@ -58,6 +58,26 @@ val doc = document {
 
 ### Document Info
 
+Creating info object is straight forward.
+
+- title is required
+- version is required
+
+```kotlin
+info {
+    title { "OpenAPI 3 Spec" }
+    description { "Descriptive info" }
+    termsOfService { "Terms Of Service goes here" }
+    version { "1.0.0" }
+    contact {
+        name { "Islam Shehata" }
+        email { "schehata@icloud.com" }
+    }
+    license {
+        name { "GPL 3" }
+    }
+}
+```
 
 
 ### Adding Servers
