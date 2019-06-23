@@ -12,7 +12,7 @@ data class Operation(
     val callbacks: Map<String, Reference>?,
     val deprecated: Boolean = false,
     val security: SecurityRequirement? = null,
-    val servers: List<Server>
+    val servers: List<Server>?
 )
 
 class OperationBuilder {
@@ -27,7 +27,7 @@ class OperationBuilder {
     private var callbacks: Map<String, Reference>? = mapOf()
     private var deprecated: Boolean = false
     private var security: SecurityRequirement? = null
-    private var servers: ArrayList<Server> = arrayListOf()
+    private var servers: MutableList<Server>? = null
 
     fun tag(block: () -> String) { tags.add(block()) }
     fun summary(block: () -> String) { summary = block() }
@@ -46,10 +46,12 @@ class OperationBuilder {
         security = SecurityRequirementBuilder().apply(block).build()
     }
     fun server(block: ServerBuilder.() -> Unit) {
-        servers.add(ServerBuilder().apply(block).build())
+        if (servers.isNullOrEmpty()) {
+            servers = mutableListOf()
+        }
+        servers!!.add(ServerBuilder().apply(block).build())
     }
 
     fun build() = Operation(tags, summary, description, externalDocs, operationId, parameters, requestBody, responses,
         callbacks, deprecated, security, servers)
-
 }
