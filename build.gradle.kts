@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-git s
+
 plugins {
     kotlin("jvm") version "1.3.40"
     id("io.gitlab.arturbosch.detekt").version("1.0.0-RC15")
