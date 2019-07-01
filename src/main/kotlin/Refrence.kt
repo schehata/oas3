@@ -1,5 +1,9 @@
 package main
 
-data class Reference(
-    val ref: String
-)
+data class Reference(override var `$ref`: String?) : Referable()
+
+class ReferenceBuilder {
+    var ref: String = ""
+
+    fun build() = Reference(ref)
+}

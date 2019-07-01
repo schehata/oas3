@@ -1,5 +1,7 @@
 package main
 
+import arrow.core.Either
+
 data class Path(
     val ref: String? = null,
     val summary: String? = null,
@@ -13,7 +15,7 @@ data class Path(
     val patch: Operation? = null,
     val trace: Operation? = null,
     val servers: List<Server>? = null,
-    val parameters: Reference? = null
+    val parameters: List<Parameter>? = null
 )
 
 class PathBuilder {
@@ -29,7 +31,7 @@ class PathBuilder {
     private var patch: Operation? = null
     private var trace: Operation? = null
     private var servers: MutableList<Server>? = null
-    private var parameters: Reference? = null
+    private var parameters: MutableList<Parameter>? = null
 
     fun get(block: OperationBuilder.() -> Unit) { get = OperationBuilder().apply(block).build() }
     fun put(block: OperationBuilder.() -> Unit) { put = OperationBuilder().apply(block).build() }
@@ -45,8 +47,18 @@ class PathBuilder {
         }
         servers!!.add(ServerBuilder().apply(block).build())
     }
-    fun parameters(block: () -> Reference) { parameters = block() }
+
+    fun parameters(block: ParametersBuilder.() -> Unit) {
+        parameters = mutableListOf()
+        parameters!!.addAll(ParametersBuilder().apply(block))
+    }
 
     fun build() = Path(ref, summary, description, get, put, post, delete, options, head, patch, trace, servers,
         parameters)
+}
+
+class ParametersBuilder : ArrayList<Parameter>() {
+    fun parameter(block: ParameterBuilder.() -> Unit) {
+        add(ParameterBuilder().apply(block).build())
+    }
 }

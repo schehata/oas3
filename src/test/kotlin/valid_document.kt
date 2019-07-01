@@ -1,5 +1,6 @@
 package com.schehata.oas3.test
 
+import main.ParameterLocation
 import main.document
 
 val validDocument = document {
@@ -45,6 +46,22 @@ val validDocument = document {
             summary = "GET request"
             description = "TOO much to write for a desc"
             operationId = "postStatus"
+        }
+        parameters {
+            parameter {
+                name = "petName"
+                `in` = ParameterLocation.path
+            }
+            parameter {
+                `$ref` = "#/components/parameters/Pet"
+            }
+            parameter {
+                name = "petStore"
+                `in` = ParameterLocation.header
+                schema {
+                    `$ref` = "#/components/schemas/PetStore"
+                }
+            }
         }
     }
     security("oauth2") {
